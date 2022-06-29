@@ -15,4 +15,6 @@ Este repositório tem como finalidade apresentar a documentação do projeto fin
 
 # [Diagrama ER](https://user-images.githubusercontent.com/19765738/168934370-49196579-69fa-4071-bbae-8b84a061b1d6.PNG)
 
-# [Front-End] (https://github.com/JacksonTirone/Arena-Sports/tree/main/Arena-Sports-Admin)
+# [Front-End](https://github.com/JacksonTirone/Arena-Sports/tree/main/Arena-Sports-Admin)
+
+# [Back-End](https://github.com/JacksonTirone/Arena-Sports/tree/main/ArenaSportsApi)
