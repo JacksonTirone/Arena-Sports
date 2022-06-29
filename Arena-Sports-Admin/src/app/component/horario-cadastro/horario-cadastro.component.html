@@ -1,0 +1,143 @@
+<mat-card class="cadastro-card">
+  <mat-card-header>
+    <div mat-card-avatar class="color-verde">
+      <i class="material-icons">edit</i>
+    </div>
+    <mat-card-title>{{acao}} Horário</mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="col-6">
+        <div class="col-6">
+          <mat-form-field>
+            <mat-label>Quadra</mat-label>
+            <mat-select [(ngModel)]="data.quadraId" (selectionChange)="onChangeQuadra($event)">
+              <mat-option *ngFor="let quadra of quadras" [value]="quadra.quadraId">
+                {{quadra.descricao}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error *ngIf="vazioClicado(data.quadraId)">
+            O campo é obrigatório
+          </mat-error>
+        </div>
+        <div class="col-6">
+          <mat-form-field>
+            <mat-label>Dia Semana</mat-label>
+            <mat-select [(ngModel)]="data.diaSemana" [disabled]="!data.quadraId"
+              (selectionChange)="onChangeDia($event)">
+              <mat-option value="0">Domingo</mat-option>
+              <mat-option value="1">Segunda</mat-option>
+              <mat-option value="2">Terça</mat-option>
+              <mat-option value="3">Quarta</mat-option>
+              <mat-option value="4">Quinta</mat-option>
+              <mat-option value="5">Sexta</mat-option>
+              <mat-option value="6">Sábado</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error *ngIf="vazioClicado(data.diaSemana)">
+            O campo é obrigatório
+          </mat-error>
+        </div>
+        <div class="col-12" style="padding: 6px 6px 6px 6px;">
+          <h2>Novo cadastro de horário</h2>
+        </div>
+
+        <div class="col-3" style="padding: 6px 6px 6px 6px;">
+          <mat-form-field>
+            <input matInput [(ngModel)]="data.valor" placeholder="Valor" currencyMask>
+          </mat-form-field>
+          <mat-error *ngIf="vazioClicado(data.valor)">
+            O campo é obrigatório
+          </mat-error>
+        </div>
+        <div class="col-12" style="padding: 6px 6px 6px 6px;">
+          <mat-label>Duração</mat-label>
+        </div>
+        <div class="col-3" style="padding: 6px 6px 6px 6px;">
+          <mat-form-field>
+            <mat-label>Hora</mat-label>
+            <mat-select [(ngModel)]="horaDuracao">
+              <mat-option *ngFor="let hora of horasDuracao" [value]="hora">
+                {{hora}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3" style="padding: 6px 6px 6px 6px;">
+          <mat-form-field>
+            <mat-label>Minutos</mat-label>
+            <mat-select [(ngModel)]="minutosDuracao">
+              <mat-option *ngFor="let minuto of minutos" [value]="minuto">
+                {{minuto}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12" style="padding: 6px 6px 6px 6px;">
+          <mat-label>Início</mat-label>
+        </div>
+        <div class="col-3" style="padding: 6px 6px 6px 6px;">
+          <mat-form-field>
+            <mat-label>Hora</mat-label>
+            <mat-select [(ngModel)]="horaInicio">
+              <mat-option *ngFor="let hora of horas" [value]="hora">
+                {{hora}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3" style="padding: 6px 6px 6px 6px;">
+          <mat-form-field>
+            <mat-label>Minutos</mat-label>
+            <mat-select [(ngModel)]="minutoInicio">
+              <mat-option *ngFor="let minuto of minutos" [value]="minuto">
+                {{minuto}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12" style="padding: 6px 6px 6px 6px;">
+          <mat-label>Final</mat-label>
+        </div>
+        <div class="col-3" style="padding: 6px 6px 6px 6px;">
+          <mat-form-field>
+            <mat-label>Hora</mat-label>
+            <mat-select [(ngModel)]="horaFim">
+              <mat-option *ngFor="let hora of horas" [value]="hora">
+                {{hora}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3" style="padding: 6px 6px 6px 6px;">
+          <mat-form-field>
+            <mat-label>Minutos</mat-label>
+            <mat-select [(ngModel)]="minutoFim">
+              <mat-option *ngFor="let minuto of minutos" [value]="minuto">
+                {{minuto}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12">
+          <button mat-flat-button class="color-2" (click)="salvar()">Salvar</button>
+        </div>
+      </div>
+      <div class="col-6 cinza">
+        <h2>Horários cadastrados</h2>
+        <div class="col-12" [hidden]="horarios.length !== 0">Não há horários cadastrados</div>
+        <div class="" *ngFor="let h of horarios">
+          <div class="lista">
+            {{h.timeInicio}} as {{h.timeFim}} ({{h.duracao}}) {{h.valor | currency:'BRL'}}  <i class="material-icons mouse" style="position: relative;top: 7px;" matTooltip="Excluir" [matTooltipPosition]="'above'"
+            (click)="openDialogExcluir(h)">close</i>      
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>

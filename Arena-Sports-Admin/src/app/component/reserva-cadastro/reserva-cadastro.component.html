@@ -1,0 +1,84 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar class="color-verde">
+      <i class="material-icons">edit</i>
+    </div>
+    <mat-card-title style="padding-top: 10px; font-weight: normal; font-size: 16x;">{{data.titulo}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+        <p style="text-align: center; font-weight: bold; font-size: 18px; padding-top: 14px;">{{data.dataReserva  | date:'shortDate'}} {{data.mensagem}}</p>
+    </div>
+    <div class="row">
+      <div *ngIf="data.editar" class="col-12">
+        <h4>{{data.reserva.nomeCliente}}</h4>
+      </div>
+    </div>
+
+    <div *ngIf="!data.editar" class="row">
+      <div class="col-10">
+        <mat-form-field>
+          <input matInput
+                placeholder="Cliente"
+                aria-label="Cliente"
+                [matAutocomplete]="auto"
+                [formControl]="searchClientesCtrl"
+                (blur)="onBlurMethod()">
+          <mat-error *ngIf="searchClientesCtrl.invalid">Cliente inválido</mat-error>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let cliente of filteredOptions | async" [value]="cliente">
+              <span>{{cliente.cpf}} - {{cliente.nome}}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <button mat-icon-button (click)="addCliente()" aria-label="Example icon-button with menu icon">
+          <mat-icon>person_add</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label>Churrasqueira</mat-label>
+          <mat-select [(ngModel)]="data.churrasqueiraId" (selectionChange)="changeChurras($event.value)">
+            <mat-option *ngFor="let c of churrasqueiras" [value]="c.churrasqueiraId">
+              {{c.descricao}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-radio-group [disabled]="data.churrasqueiraId == 0"
+          [(ngModel)]="data.churrasqueiraPacoteId">
+          <mat-radio-button *ngFor="let p of pacotes" [value]="p" (change)="changePacote($event)" style="margin-top: 5px;">
+            <span style="white-space: normal; font-size: 14px;">{{p.descricao}} {{p.valor | currency:'BRL'}}</span>
+          </mat-radio-button>
+        </mat-radio-group>
+        <mat-error *ngIf="data.churrasqueiraId !== 0 && data.churrasqueiraPacoteId === 0">
+          O campo é obrigatório
+        </mat-error>
+      </div>
+    </div>
+    <div class="row" style="padding: 0 0 5px 10px;">
+      <div class="col-9">
+        <mat-label style="font-size: 16px;">Opcionais</mat-label>
+        <div class="row" *ngFor="let o of opcionais">
+          <mat-checkbox class="example-margin" (change)="marcar($event, o)"> {{o.descricao}} - {{o.valor | currency: 'BRL'}}
+          </mat-checkbox>
+        </div>
+      </div>
+      <div class="col-3" style="text-align: right; margin-top: 30px; font-size: 16px;">
+        <label>Valor Total: <b>{{calcularTotal() | currency: 'BRL'}}</b></label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="acao-btn" style="text-align: right;">
+        <button mat-raised-button [mat-dialog-close]="false">Cancelar</button>
+        <button mat-raised-button color="primary" style="margin-left: 14px;" (click)="reservar()">Reservar</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

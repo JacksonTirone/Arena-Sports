@@ -1,0 +1,62 @@
+<mat-card class="cadastro-card">
+  <mat-card-header>
+    <div mat-card-avatar class="color-verde">
+      <i class="material-icons">edit</i>
+    </div>
+    <mat-card-title style="padding-top: 8px;">Reservas {{ data  | date:'dd/MM/yyyy' }}</mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row" style="padding-top: 12px;">
+      <div class="col-2">
+        <mat-form-field>
+          <mat-label>Data Reserva</mat-label>
+          <input matInput [matDatepicker]="dp" [(ngModel)]="data" disabled (dateChange)="onChange($event)">
+          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp disabled="false"></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <div mat-card-avatar class="color-verde" style="background: #000 !important; color: #FFF !important;">
+          <i class="material-icons mouse" (click)="find()">refresh</i>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <p [hidden]="dataSource.length !== 0">Não há horários cadastrados</p>
+      <div class="col-6" *ngFor="let q of dataSource">
+        <div class="col-12 cinza" style="margin: 10px; border-radius: 5px;">
+          <h2>{{q.descricao}}</h2>
+          <p>{{getEsporte(q.esporteId)}}, {{q.coberta ? 'Coberta' : 'Descoberta'}}</p>
+          <p [hidden]="q.horarios.length !== 0">Não há horários cadastrados</p>
+
+          <div *ngFor="let h of q.horarios">
+            <div class="row" [ngClass]="{'disableDiv': !h.disponivel, 'disableDivVago': !h.disponivel && h.reserva == null }" style="background-color: #3f51b5; margin: 8px; border-radius: 5px;">
+              <div class="col-8">
+                <p style="color: white;">{{h.timeInicio}} às {{h.timeFim}} ({{h.duracao}})</p>
+                <p style="color: white; margin-bottom: 2px;" *ngIf="h.disponivel"> {{h.valor | currency:'BRL'}}</p>
+                <p style="color: white; margin-bottom: 2px" *ngIf="!h.disponivel && h.reserva != null"> {{h.reserva.valorTotal | currency:'BRL'}}</p>
+                <p style="color: white; margin-bottom: 2px" *ngIf="!h.disponivel && h.reserva != null"> {{h.reserva.nomeCliente}}</p>
+                <p style="color: white; margin-bottom: 2px" *ngIf="!h.disponivel && h.reserva != null"> {{h.reserva.opcionais}}</p>
+                <p style="color: white; margin-bottom: 2px" *ngIf="!h.disponivel && h.reserva != null"> {{h.reserva.churrasqueiraNome}}</p>
+                <p style="color: white; margin-bottom: 2px"  *ngIf="!h.disponivel && h.reserva == null">Este horário não foi reservado</p>
+              </div>
+              <div class="col-4" style="text-align: center; margin-top: 5px;">
+                <i *ngIf="h.disponivel"
+                  class="material-icons mouse" style="position: relative;top: 7px; color: white;" matTooltip="Reservar"
+                  [matTooltipPosition]="'above'" (click)="openReserva(data, q.descricao, h, false)">add_shopping_cart</i>
+                <!-- <i *ngIf="!h.disponivel && h.reserva != null && h.podeEditarCancelar"
+                  class="material-icons mouse" style="position: relative;top: 7px; color: white;" matTooltip="Visualizar Reserva"
+                  [matTooltipPosition]="'above'" (click)="openReserva(data, q.descricao, h, true)">search</i> -->
+                <i *ngIf="!h.disponivel && h.reserva != null && h.podeEditarCancelar"
+                  class="material-icons mouse" style="position: relative;top: 7px; color: white;" matTooltip="Cancelar"
+                  [matTooltipPosition]="'above'" (click)="openDialogCancelar(h.reserva)">cancel</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

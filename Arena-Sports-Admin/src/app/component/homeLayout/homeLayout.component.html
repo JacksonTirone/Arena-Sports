@@ -1,0 +1,51 @@
+<p>
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <span class="example-spacer"></span>
+            <button mat-icon-button class="example-icon" (click)="drawer.toggle()" aria-label="Example icon-button with menu icon">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span>Arena Sports Admin</span>
+            <span class="toolbar-spacer"></span>
+            <span>{{nome}}</span>
+            <button mat-icon-button class="toolbar-icon mouse" (click)="logout()" title="Sair">
+                <mat-icon>exit_to_app</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container class="nav-container menu">
+        <mat-sidenav #drawer mode="side" opened role="navigation" class="sidebar">
+            <mat-nav-list>
+                <a mat-list-item routerLink='/horario-pesquisa' routerLinkActive="active-list-item">
+                    <mat-icon>event_available</mat-icon>
+                    Reservar
+                </a>
+                <a style="height: 80px;" mat-list-item routerLink='/horario-cadastro' routerLinkActive="active-list-item">
+                    <mat-icon>schedule</mat-icon>
+                    Configurar Horários Quadras
+                </a>
+                <a mat-list-item routerLink='/quadra-pesquisa' routerLinkActive="active-list-item">
+                    <mat-icon>edit</mat-icon>
+                    Quadras
+                </a>
+                <a mat-list-item routerLink='/opcionais-pesquisa' routerLinkActive="active-list-item">
+                    <mat-icon>edit</mat-icon>
+                    Opcionais Quadra
+                </a>
+                <a mat-list-item routerLink='/churrasqueira-pesquisa' routerLinkActive="active-list-item">
+                    <mat-icon>edit</mat-icon>
+                    Churrasqueiras
+                </a>
+                <a mat-list-item routerLink='/pacote-pesquisa' routerLinkActive="active-list-item">
+                    <mat-icon>edit</mat-icon>
+                    Pacotes Churrasqueiras
+                </a>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div class="row">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</p>

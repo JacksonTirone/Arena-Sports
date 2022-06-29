@@ -1,0 +1,34 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar class="color-verde">
+      <i class="material-icons">edit</i>
+    </div>
+    <mat-card-title style="padding-top: 10px; font-weight: normal; font-size: 16x;">{{data.titulo}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="cadClienteForm" (ngSubmit)="salvarCliente()">
+      <div class="row" style="margin-top: 10px;">
+        <div class="col-4">
+          <mat-form-field appearance="fill">
+              <mat-label>CPF</mat-label>
+              <input matInput mask="000.000.000-00" [formControl]="cpfInput" />
+              <mat-error *ngIf="cpfInput.invalid">CPF inválido</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-8">
+          <mat-form-field appearance="fill">
+              <mat-label>Nome</mat-label>
+              <input matInput [formControl]="nomeInput" />
+              <mat-error *ngIf="nomeInput.invalid">Nome inválido</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="acao-btn" style="text-align: right;">
+          <button mat-raised-button [mat-dialog-close]="false">Cancelar</button>
+          <button mat-raised-button color="primary" style="margin-left: 14px;"  type="submit">Salvar</button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

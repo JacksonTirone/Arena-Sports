@@ -1,0 +1,64 @@
+<mat-card class="cadastro-card" >
+  <mat-card-header>
+    <div mat-card-avatar class="color-verde">
+      <i class="material-icons">edit</i>
+    </div>
+    <mat-card-title>{{acao}} Quadra</mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="col-12">
+        <mat-form-field>
+          <input matInput [(ngModel)]="data.descricao" placeholder="Descrição">
+        </mat-form-field>
+        <mat-error *ngIf="vazioClicado(data.descricao)">
+          O campo é obrigatório
+        </mat-error>
+      </div>
+      <div class="col-12">
+        <mat-form-field>
+          <mat-label>Piso</mat-label>
+          <mat-select [(ngModel)]="data.pisoId">            
+            <mat-option [value]="1">Sintetico</mat-option>
+            <mat-option [value]="2">Areia</mat-option>            
+          </mat-select>
+        </mat-form-field>
+      </div>      
+      <div class="col-12">
+        <mat-form-field>
+          <mat-label>Esporte</mat-label>
+          <mat-select [(ngModel)]="data.esporteId">                    
+            <mat-option [value]="1" >Futebol Society 7</mat-option>
+            <mat-option [value]="2" >Futebol Society 5</mat-option>            
+            <mat-option [value]="3" >Futevolei</mat-option>            
+          </mat-select>
+        </mat-form-field>
+      </div>      
+      <div class="col-12">
+        <mat-form-field>
+          <mat-label>Coberta</mat-label>
+          <mat-select [(ngModel)]="data.coberta">                    
+            <mat-option [value]="true">Sim</mat-option>
+            <mat-option [value]="false">Não</mat-option>                        
+          </mat-select>
+        </mat-form-field>
+      </div>    
+      <div class="col-12">
+        <mat-form-field>
+          <mat-label>Ativa</mat-label>
+          <mat-select [(ngModel)]="data.status">                    
+            <mat-option default [value]="true">Sim</mat-option>
+            <mat-option [value]="false">Não</mat-option>                        
+          </mat-select>
+        </mat-form-field>
+      </div>        
+    </div>
+    <div class="row">
+      <div class="acao-btn right">
+        <button mat-raised-button style="margin-right: 8px;" class="color-1" (click)="voltar()">Voltar</button>
+        <button mat-raised-button class="color-2" (click)="salvar()">Salvar</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
